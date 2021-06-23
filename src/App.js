@@ -8,7 +8,10 @@ const App = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
-  const [loggedOut, setLoggedOut ] = useState(false);
+  const [loggedOut, setLoggedOut] = useState(false);
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [url, setUrl] = useState("");
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -45,6 +48,24 @@ const App = () => {
     setLoggedOut(true);
   };
 
+  const addNewBlog = async (event) => {
+    event.preventDefault();
+
+    const blogObject = {
+      title, author, url
+    }
+
+    try {
+      const newBlog = await blogService.create(blogObject);
+      setTitle("")
+      setAuthor("")
+      setUrl("")
+    } catch (exception) {
+      
+    }
+
+  }
+
   if (user === null) {
     return (
       <div>
@@ -76,7 +97,7 @@ const App = () => {
       <div>
         <p>Successfully logged out</p>
       </div>
-    )
+    );
   }
 
   return (
@@ -85,6 +106,42 @@ const App = () => {
       <p>
         {user.name} logged in <button onClick={logOut}>logout</button>
       </p>
+
+      <h2>Create new</h2>
+
+      <form style={{ margin: "10px" }} onSubmit={addNewBlog}>
+        <div>
+          title:
+          <input
+            type="text"
+            value={title}
+            name="title"
+            onChange={({ target }) => setTitle(target.value)}
+          />
+        </div>
+
+        <div>
+          author:
+          <input
+            type="text"
+            value={author}
+            name="author"
+            onChange={({ target }) => setAuthor(target.value)}
+          />
+        </div>
+
+        <div>
+          url:
+          <input
+            type="text"
+            value={url}
+            name="url"
+            onChange={({ target }) => setUrl(target.value)}
+          />
+        </div>
+
+        <button type="submit">Create</button>
+      </form>
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
