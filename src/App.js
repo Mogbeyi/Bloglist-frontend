@@ -17,9 +17,9 @@ const App = () => {
     event.preventDefault();
 
     let loginUser = {
-      "username": username.toLowerCase(),
-      "password": password
-    }
+      username: username.toLowerCase(),
+      password: password,
+    };
 
     try {
       const user = await loginService.login(loginUser);
@@ -60,6 +60,7 @@ const App = () => {
   return (
     <div>
       <h2>blogs</h2>
+      <p>{user.name} logged in</p>
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
