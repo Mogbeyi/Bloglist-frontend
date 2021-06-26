@@ -52,61 +52,47 @@ const App = () => {
     event.preventDefault();
 
     const blogObject = {
-      title, author, url
-    }
+      title,
+      author,
+      url,
+    };
 
     try {
       const newBlog = await blogService.create(blogObject);
-      setTitle("")
-      setAuthor("")
-      setUrl("")
-    } catch (exception) {
-      
-    }
+      setTitle("");
+      setAuthor("");
+      setUrl("");
+    } catch (exception) {}
+  };
 
-  }
-
-  if (user === null) {
-    return (
-      <div>
-        <form onSubmit={handleLogin}>
-          <div>
-            username
-            <input
-              type="text"
-              value={username}
-              name="Username"
-              onChange={({ target }) => setUsername(target.value)}
-            />
-          </div>
-          <div>
-            password
-            <input
-              type="text"
-              value={password}
-              name="password"
-              onChange={({ target }) => setPassword(target.value)}
-            />
-          </div>
-          <button type="submit">login</button>
-        </form>
-      </div>
-    );
-  } else if (loggedOut) {
-    return (
-      <div>
-        <p>Successfully logged out</p>
-      </div>
-    );
-  }
-
-  return (
+  const loginForm = () => (
     <div>
-      <h2>blogs</h2>
-      <p>
-        {user.name} logged in <button onClick={logOut}>logout</button>
-      </p>
+      <form onSubmit={handleLogin}>
+        <div>
+          username
+          <input
+            type="text"
+            value={username}
+            name="Username"
+            onChange={({ target }) => setUsername(target.value)}
+          />
+        </div>
+        <div>
+          password
+          <input
+            type="text"
+            value={password}
+            name="password"
+            onChange={({ target }) => setPassword(target.value)}
+          />
+        </div>
+        <button type="submit">login</button>
+      </form>
+    </div>
+  );
 
+  const blogForm = () => (
+    <div>
       <h2>Create new</h2>
 
       <form style={{ margin: "10px" }} onSubmit={addNewBlog}>
@@ -142,11 +128,34 @@ const App = () => {
 
         <button type="submit">Create</button>
       </form>
+    </div>
+  );
+
+  if (loggedOut) {
+    return (
+      <div>
+        <p>Successfully logged out</p>
+      </div>
+    );
+  } else {
+  return (
+    <div>
+      <h2>blogs</h2>
+
+      <p>
+       You are logged in <button onClick={logOut}>logout</button>
+      </p>
+
+      {user === null && loginForm()}
+      {user !== null && blogForm()}
+
       {blogs.map((blog) => (
         <Blog key={blog.id} blog={blog} />
       ))}
     </div>
   );
+
+  }
 };
 
 export default App;
