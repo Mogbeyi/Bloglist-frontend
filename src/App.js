@@ -66,7 +66,8 @@ const App = () => {
   };
 
   const loginForm = () => (
-    <div>
+    <div style={{ marginBottom: "20px" }}>
+      <h4>Please log into the application</h4>
       <form onSubmit={handleLogin}>
         <div>
           username
@@ -131,6 +132,8 @@ const App = () => {
     </div>
   );
 
+  const userExist = () => user === null;
+
   if (loggedOut) {
     return (
       <div>
@@ -138,23 +141,23 @@ const App = () => {
       </div>
     );
   } else {
-  return (
-    <div>
-      <h2>blogs</h2>
+    return (
+      <div>
+        <h2>blogs</h2>
 
-      <p>
-       You are logged in <button onClick={logOut}>logout</button>
-      </p>
+        {!userExist() && (
+          <p>
+            {user.name} is logged in <button onClick={logOut}>logout</button>
+          </p>
+        )}
 
-      {user === null && loginForm()}
-      {user !== null && blogForm()}
+        {userExist() && loginForm()}
+        {!userExist() && blogForm()}
 
-      {blogs.map((blog) => (
-        <Blog key={blog.id} blog={blog} />
-      ))}
-    </div>
-  );
-
+        {!userExist() &&
+          blogs.map((blog) => <Blog key={blog.id} blog={blog} />)}
+      </div>
+    );
   }
 };
 
