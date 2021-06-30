@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import Blog from "./components/Blog";
+import LoginForm from "./components/LoginForm";
+import BlogForm from "./components/BlogForm";
+import Logout from "./components/Logout";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
 
@@ -43,7 +46,7 @@ const App = () => {
     } catch (exception) {}
   };
 
-  const logOut = () => {
+  const handleLogOut = () => {
     window.localStorage.removeItem("loggedBlogappUser");
     setLoggedOut(true);
   };
@@ -66,70 +69,25 @@ const App = () => {
   };
 
   const loginForm = () => (
-    <div style={{ marginBottom: "20px" }}>
-      <h4>Please log into the application</h4>
-      <form onSubmit={handleLogin}>
-        <div>
-          username
-          <input
-            type="text"
-            value={username}
-            name="Username"
-            onChange={({ target }) => setUsername(target.value)}
-          />
-        </div>
-        <div>
-          password
-          <input
-            type="text"
-            value={password}
-            name="password"
-            onChange={({ target }) => setPassword(target.value)}
-          />
-        </div>
-        <button type="submit">login</button>
-      </form>
-    </div>
+    <LoginForm
+      username={username}
+      password={password}
+      handleLogin={handleLogin}
+      handleUsernameChange={({ target }) => setUsername(target.value)}
+      handlePasswordChange={({ target }) => setPassword(target.value)}
+    />
   );
 
   const blogForm = () => (
-    <div>
-      <h2>Create new</h2>
-
-      <form style={{ margin: "10px" }} onSubmit={addNewBlog}>
-        <div>
-          title:
-          <input
-            type="text"
-            value={title}
-            name="title"
-            onChange={({ target }) => setTitle(target.value)}
-          />
-        </div>
-
-        <div>
-          author:
-          <input
-            type="text"
-            value={author}
-            name="author"
-            onChange={({ target }) => setAuthor(target.value)}
-          />
-        </div>
-
-        <div>
-          url:
-          <input
-            type="text"
-            value={url}
-            name="url"
-            onChange={({ target }) => setUrl(target.value)}
-          />
-        </div>
-
-        <button type="submit">Create</button>
-      </form>
-    </div>
+    <BlogForm
+      title={title}
+      author={author}
+      url={url}
+      addNewBlog={addNewBlog}
+      handleSetAuthor={({ target }) => setAuthor(target.value)}
+      handleSetUrl={({ target }) => setAuthor(target.value)}
+      handleSetTitle={({ target }) => setAuthor(target.value)}
+    />
   );
 
   const userExist = () => user === null;
@@ -145,11 +103,7 @@ const App = () => {
       <div>
         <h2>blogs</h2>
 
-        {!userExist() && (
-          <p>
-            {user.name} is logged in <button onClick={logOut}>logout</button>
-          </p>
-        )}
+        {!userExist() && <Logout user={user} handleLogOut={handleLogOut} />}
 
         {userExist() && loginForm()}
         {!userExist() && blogForm()}
