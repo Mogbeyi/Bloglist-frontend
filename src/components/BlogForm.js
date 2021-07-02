@@ -1,14 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 
-const BlogForm = ({
-  addNewBlog,
-  title,
-  author,
-  url,
-  handleSetTitle,
-  handleSetAuthor,
-  handleSetUrl,
-}) => {
+const BlogForm = ({ createBlog }) => {
+  const [title, setTitle] = useState("");
+  const [author, setAuthor] = useState("");
+  const [url, setUrl] = useState("");
+
+  const addNewBlog = async (event) => {
+    event.preventDefault();
+
+    const blogObject = {
+      title,
+      author,
+      url,
+    };
+
+    try {
+      createBlog(blogObject);
+      console.log(`The values are ${title}, ${author}, ${url}`);
+      setTitle("");
+      setAuthor("");
+      setUrl("");
+    } catch (exception) {}
+  };
+
   return (
     <div>
       <h2>Create new</h2>
@@ -20,7 +34,7 @@ const BlogForm = ({
             type="text"
             value={title}
             name="title"
-            onChange={handleSetTitle}
+            onChange={({ target }) => setTitle(target.value)}
           />
         </div>
 
@@ -30,13 +44,18 @@ const BlogForm = ({
             type="text"
             value={author}
             name="author"
-            onChange={handleSetAuthor}
+            onChange={({ target }) => setAuthor(target.value)}
           />
         </div>
 
         <div>
           url:
-          <input type="text" value={url} name="url" onChange={handleSetUrl} />
+          <input
+            type="text"
+            value={url}
+            name="url"
+            onChange={({ target }) => setUrl(target.value)}
+          />
         </div>
 
         <button type="submit">Create</button>
