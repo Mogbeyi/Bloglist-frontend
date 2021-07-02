@@ -12,9 +12,6 @@ const App = () => {
   const [password, setPassword] = useState("");
   const [user, setUser] = useState(null);
   const [loggedOut, setLoggedOut] = useState(false);
-  const [title, setTitle] = useState("");
-  const [author, setAuthor] = useState("");
-  const [url, setUrl] = useState("");
 
   useEffect(() => {
     blogService.getAll().then((blogs) => setBlogs(blogs));
@@ -51,21 +48,8 @@ const App = () => {
     setLoggedOut(true);
   };
 
-  const addNewBlog = async (event) => {
-    event.preventDefault();
-
-    const blogObject = {
-      title,
-      author,
-      url,
-    };
-
-    try {
-      const newBlog = await blogService.create(blogObject);
-      setTitle("");
-      setAuthor("");
-      setUrl("");
-    } catch (exception) {}
+  const addBlog = async (blogObject) => {
+    const newBlog = await blogService.create(blogObject);
   };
 
   const loginForm = () => (
@@ -78,17 +62,7 @@ const App = () => {
     />
   );
 
-  const blogForm = () => (
-    <BlogForm
-      title={title}
-      author={author}
-      url={url}
-      addNewBlog={addNewBlog}
-      handleSetAuthor={({ target }) => setAuthor(target.value)}
-      handleSetUrl={({ target }) => setAuthor(target.value)}
-      handleSetTitle={({ target }) => setAuthor(target.value)}
-    />
-  );
+  const blogForm = () => <BlogForm createBlog={addBlog} />;
 
   const userExist = () => user === null;
 
