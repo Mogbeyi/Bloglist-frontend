@@ -27,7 +27,7 @@ const BlogForm = ({ createBlog }) => {
     <div>
       <h2>Create new</h2>
 
-      <form style={{ margin: "10px" }} onSubmit={addNewBlog}>
+      <form onSubmit={addNewBlog}>
         <div>
           title:
           <input

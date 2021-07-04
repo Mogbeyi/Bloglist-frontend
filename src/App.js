@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Blog from "./components/Blog";
 import LoginForm from "./components/LoginForm";
 import BlogForm from "./components/BlogForm";
+import Togglable from "./components/Togglable";
 import Logout from "./components/Logout";
 import blogService from "./services/blogs";
 import loginService from "./services/login";
@@ -62,7 +63,11 @@ const App = () => {
     />
   );
 
-  const blogForm = () => <BlogForm createBlog={addBlog} />;
+  const blogForm = () => (
+    <Togglable buttonLabel="create blog">
+      <BlogForm createBlog={addBlog} />
+    </Togglable>
+  );
 
   const userExist = () => user === null;
 
