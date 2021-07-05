@@ -17,10 +17,10 @@ const App = () => {
   useEffect(() => {
     blogService
       .getAll()
-      .then((blogs) =>
-        setBlogs(blogs.sort((a, b) => (a.likes > b.likes ? 1 : -1)))
-      );
+      .then((blogs) => setBlogs(blogs.sort(sortPostDescending)));
   }, []);
+
+  const sortPostDescending = (a, b) => (a.likes < b.likes ? 1 : -1);
 
   useEffect(() => {
     const loggedUserJSON = window.localStorage.getItem("loggedBlogappUser");
