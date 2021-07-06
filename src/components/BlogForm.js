@@ -16,7 +16,6 @@ const BlogForm = ({ createBlog }) => {
 
     try {
       createBlog(blogObject);
-      console.log(`The values are ${title}, ${author}, ${url}`);
       setTitle("");
       setAuthor("");
       setUrl("");
