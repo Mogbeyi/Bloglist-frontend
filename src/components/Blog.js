@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-const Blog = ({ blog }) => {
+const Blog = ({ blog, handleDelete}) => {
   const [visible, setVisible] = useState(false);
 
   const showWhenVisible = { display: visible ? "" : "none" };
@@ -22,6 +22,7 @@ const Blog = ({ blog }) => {
       <div>
         {blog.title} {blog.author}
         <button onClick={toggleVisibility}>view</button>
+        <button onClick={handleDelete}>delete</button>
       </div>
       <div style={showWhenVisible}>
         {blog.url}

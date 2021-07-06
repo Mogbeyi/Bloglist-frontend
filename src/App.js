@@ -57,6 +57,10 @@ const App = () => {
     const newBlog = await blogService.create(blogObject);
   };
 
+  const handleDelete = async (id) => {
+    const deletedBlog = await blogService.remove(id);
+  };
+
   const loginForm = () => (
     <LoginForm
       username={username}
@@ -92,7 +96,13 @@ const App = () => {
         {!userExist() && blogForm()}
 
         {!userExist() &&
-          blogs.map((blog) => <Blog key={blog.id} blog={blog} />)}
+          blogs.map((blog) => (
+            <Blog
+              key={blog.id}
+              blog={blog}
+              handleDelete={() => handleDelete(blog.id)}
+            />
+          ))}
       </div>
     );
   }
