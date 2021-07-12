@@ -14,4 +14,7 @@ test("renders content", () => {
   const component = render(<Blog blog={blog} />);
 
   expect(component.container).toHaveTextContent("Davido")
+
+  const div = component.container.querySelector('.blog')
+  expect(div).toBeDefined()
 });
