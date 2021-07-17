@@ -25,7 +25,7 @@ const Blog = ({ blog, handleDelete }) => {
           <button onClick={toggleVisibility}>view</button>
           <button onClick={handleDelete}>delete</button>
         </div>
-        <div style={showWhenVisible}>
+        <div style={showWhenVisible} className="likesUrl">
           {blog.url}
           <br />
           {blog.likes}
