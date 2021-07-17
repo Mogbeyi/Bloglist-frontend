@@ -12,7 +12,13 @@ const Blog = ({ blog }) => {
   };
 
   const handleDelete = async (id) => {
-    const deletedBlog = await blogService.remove(id);
+    const deleteAction = window.confirm(
+      `Remove blog ${blog.title} by ${blog.author}`
+    );
+
+    if (deleteAction) {
+      await blogService.remove(id);
+    }
   };
 
   const handleLike = async () => {
