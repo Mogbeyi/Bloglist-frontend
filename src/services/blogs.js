@@ -25,4 +25,9 @@ const remove = async (id) => {
   return response.data;
 };
 
-export default { getAll, setToken, create, remove };
+const update = async (newObject, userId) => {
+  const response = await axios.put(`${baseUrl}/${userId}`, newObject);
+  return response.data;
+};
+
+export default { getAll, setToken, create, remove, update };

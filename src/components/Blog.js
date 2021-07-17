@@ -1,12 +1,27 @@
 import React, { useState } from "react";
+import blogService from "../services/blogs";
 
 const Blog = ({ blog, handleDelete }) => {
   const [visible, setVisible] = useState(false);
+  const [like, setLikes] = useState(blog.likes);
 
   const showWhenVisible = { display: visible ? "" : "none" };
 
   const toggleVisibility = () => {
     setVisible(!visible);
+  };
+
+  const handleLike = async () => {
+    //todo: work on fixing the issue with likes lagging by one update
+    setLikes(like + 1);
+    const updatedContent = {
+      user: blog.user.id,
+      likes: like,
+      author: blog.author,
+      title: blog.title,
+      url: blog.url,
+    };
+    await blogService.update(updatedContent, blog.id);
   };
 
   const blogStyle = {
@@ -18,7 +33,7 @@ const Blog = ({ blog, handleDelete }) => {
   };
 
   return (
-    <li className="blog">
+    <div className="blog">
       <div style={blogStyle}>
         <div>
           {blog.title} {blog.author}
@@ -28,10 +43,11 @@ const Blog = ({ blog, handleDelete }) => {
         <div style={showWhenVisible} className="likesUrl">
           {blog.url}
           <br />
-          {blog.likes}
+          {like}
+          <button onClick={handleLike}>like</button>
         </div>
       </div>
-    </li>
+    </div>
   );
 };
 export default Blog;
